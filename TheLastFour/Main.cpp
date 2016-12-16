@@ -18,14 +18,19 @@ int main()
 	// simulateMatch() function as an argument
 	vector<Player> p({ p1, p2, p3, p4 });
 
-	//for (int i = 0; i < 50; ++i) {	// Test loop, to be removed //
+	// Initialize the current match summary
+	int numberOfRunsToScore = 40;
+	int wicketsLeft = 3;
+	int oversRemaining = 4;
+
+	for (int i = 0; i < 10; ++i) {	// Test loop, to be removed //
 		// Set all the members as required. 		
 		TheLastFour sim;	
-		sim.setRunsToScore(40);		// Number of runs to score
-		sim.setWicketsLeft(3);		// Number of wickets left
-		sim.setOversRemaining(4);	// Number of overs remaining
+		sim.setRunsToScore(numberOfRunsToScore);	// Number of runs to score
+		sim.setWicketsLeft(wicketsLeft);			// Number of wickets left
+		sim.setOversRemaining(oversRemaining);		// Number of overs remaining
 		
-		vector<string> finalScoreBoard = { to_string(sim.getOverRemaining()) + " overs left. " + to_string(sim.getRunsToScore()) + " runs to win" };
+		vector<string> finalScoreBoard = { to_string(oversRemaining) + " overs left. " + to_string(numberOfRunsToScore) + " runs to win" };
 		sim.setScoreBoard(finalScoreBoard);
 
 		// Get the finalScoreBoard (i.e. the result of the match)
@@ -34,6 +39,6 @@ int main()
 
 		// Display the finalScoreBoard (i.e. the result of the match)
 		sim.displayFinalScoreBoard(finalScoreBoard);
-	//}
+	}
 	return 0;
 }
