@@ -23,7 +23,7 @@ int main()
 	int wicketsLeft = 3;
 	int oversRemaining = 4;
 
-	for (int i = 0; i < 10; ++i) {	// Test loop, to be removed //
+	//for (int i = 0; i < 10; ++i) {	// Test loop, to be removed //
 		// Set all the members as required. 		
 		TheLastFour sim;	
 		sim.setRunsToScore(numberOfRunsToScore);	// Number of runs to score
@@ -39,6 +39,6 @@ int main()
 
 		// Display the finalScoreBoard (i.e. the result of the match)
 		sim.displayFinalScoreBoard(finalScoreBoard);
-	}
+	//}
 	return 0;
 }
