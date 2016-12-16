@@ -79,7 +79,7 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 	mt19937 gen(rd());
 	
 	// Initialize local variables 
-	
+	enum runType { Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Five = 5, Six = 6, Out = 7 };
 	int runsToScoreNow = runsToScore;
 	int ballNo, noOfBallsRemaining = oversRemaining * 6;
 	int currentOver = 0, runScoredPerBall = 0, runsThisOver = 0;
@@ -94,13 +94,13 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 		runScoredPerBall = players[atStrike].getPlayerProbability()(gen);// Generate the run scored this ball for the current player at strike
 		ballNoThisOver++;
 
-		if (runScoredPerBall == 0 || runScoredPerBall == 2 || runScoredPerBall == 4 || runScoredPerBall == 6) {	// No strike change for 0, 2, 4 and 6 runs
+		if (runScoredPerBall == Zero || runScoredPerBall == Two || runScoredPerBall == Four || runScoredPerBall == Six) {	// No strike change for 0, 2, 4 and 6 runs
 			// runs scored summary for the current ball
 			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + players[atStrike].getPlayerName() + " scores " + to_string(runScoredPerBall) + " run(s)";
 			// update the score board
 			scoreBoard.emplace_back(runsScored);
 		}
-		else if (runScoredPerBall == 1 || runScoredPerBall == 3 || runScoredPerBall == 5) { // Players change strike for 1, 3 and 5 runs
+		else if (runScoredPerBall == One || runScoredPerBall == Three || runScoredPerBall == Five) { // Players change strike for 1, 3 and 5 runs
 			// runs scored summary for the current ball
 			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + players[atStrike].getPlayerName() + " scores " + to_string(runScoredPerBall) + " run(s)";
 			// update the score board
@@ -108,7 +108,7 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 			// change the strike of players
 			atStrike = (atStrike == player2 ? player1 : player2);
 		}
-		else if (runScoredPerBall == 7) {	// Player gets out, 7 means out
+		else if (runScoredPerBall == Out) {	// Player gets out, 7 means out
 			// runs scored summary for the current ball
 			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + players[atStrike].getPlayerName() + " gets out";
 			// update the score board
@@ -133,23 +133,24 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 		}
 
 		// Update the number of runs to score now, if runsScoredPerBall is 7, that means out
-		runsToScoreNow = (runScoredPerBall != 7 ? runsToScoreNow - runScoredPerBall : runsToScoreNow);
+		runsToScoreNow = (runScoredPerBall != Out ? runsToScoreNow - runScoredPerBall : runsToScoreNow);
 
 		// If the number of runs to score now is less than or equal to 0, 
 		// then Lengaburu has won the match. Break out of the for loop
 		//
 		// Else if runsToScoreNow is more than 0, but no wickets are left
 		// then Lengaburu has lost the match. Break of the loop
-		if (runsToScoreNow <= 0) {
+		if (runsToScoreNow <= Zero) {
 			win = true;
 			break;
 		}
-		else if (runsToScoreNow > 0 && wicketsLeft == 0) {
+		else if (runsToScoreNow > Zero && wicketsLeft == 0) {
 			win = false;
 			break;
 		}
 
 		// Increase Over counter every 6 balls
+		// Update the status after the over
 		if (ballNo % 6 == 0) {
 			ballNoThisOver = 0;
 			currentOver++;	
@@ -164,7 +165,7 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 		}
 	}
 
-	//* Optimize this condition, although I think its ok *//
+	// Display initial match summary
 	if (win) {
 		cout << "Lengaburu won by " + to_string(wicketsLeft) + " wickets and " + to_string(24 - ballNo) + " balls remaining" << endl << endl;
 	}
