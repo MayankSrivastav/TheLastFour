@@ -115,19 +115,11 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 			scoreBoard.emplace_back(runsScored);
 
 			// Bring the next player at the same position
-			auto currPlayer = atStrike;
-			// Optimize this condition //
-			if (currPlayer == player1) {
-				atStrike = nextPlayer;
-				player1 = atStrike;
-				nextPlayer++;
-			}
-			else if (currPlayer == player2) {
-				atStrike = nextPlayer;
-				player2 = atStrike;
-				nextPlayer++;
-			}
-			
+			auto currPlayer = atStrike;						
+			atStrike = nextPlayer;
+			currPlayer == player1 ? (player1 = atStrike) : (player2 = atStrike);
+			nextPlayer++;
+
 			// Update the number of wickets left
 			wicketsLeft--;
 		}
