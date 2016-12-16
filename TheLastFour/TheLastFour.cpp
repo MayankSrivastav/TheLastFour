@@ -69,8 +69,9 @@ void TheLastFour::displayFinalScoreBoard(const vector<string>& finalScoreBoard) 
 
 // This is the main function to start simulation of the match based
 // on the given parameters. 
+//
 // Returns the result of the match simulation. The match summary is
-// stored in vector of strings
+// stored in vector of strings.
 vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 {
 	// Generate uniformly distributed random number
@@ -78,6 +79,7 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 	mt19937 gen(rd());
 	
 	// Initialize local variables 
+	
 	int runsToScoreNow = runsToScore;
 	int ballNo, noOfBallsRemaining = oversRemaining * 6;
 	int currentOver = 0, runScoredPerBall = 0, runsThisOver = 0;
@@ -86,8 +88,6 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 	bool win = false;
 	int player1 = 0, player2 = 1;	// Current player in the middle
 	int atStrike = player1, nextPlayer = player2 + 1;	// player1 is at strike. next Player will 1 down (which is aliased as player2 + 1 and so on)
-
-	scoreBoard.emplace_back("4 overs left. 40 runs to win");	//* Initialize this from main.cpp *//
 
 	// Simulation starts with ball no. 1 and goes upto number of balls remaining
 	for (ballNo = 1; ballNo <= noOfBallsRemaining; ++ballNo) {
@@ -164,7 +164,7 @@ vector<string> TheLastFour::simulateMatch(const vector<Player>& players)
 		}
 	}
 
-	//* Optimize this condition *//
+	//* Optimize this condition, although I think its ok *//
 	if (win) {
 		cout << "Lengaburu won by " + to_string(wicketsLeft) + " wickets and " + to_string(24 - ballNo) + " balls remaining" << endl << endl;
 	}
