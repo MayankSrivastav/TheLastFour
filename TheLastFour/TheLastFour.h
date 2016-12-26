@@ -3,9 +3,12 @@
 #ifndef THELASTFOUR_H
 #define THELASTFOUR_H
 
-#include "Player.h"
+//#include "Player.h"
 #include <vector>
-using std::vector;
+#include <algorithm>
+#include <random>
+#include <string>
+using namespace std;
 
 class TheLastFour
 {
@@ -13,6 +16,7 @@ private:
 	int runsToScore;
 	int wicketsLeft;
 	int oversRemaining;
+	vector<pair<string, discrete_distribution<int>>> player;
 	vector<string> scoreBoard;
 
 public:	
@@ -42,6 +46,10 @@ public:
 	// This function gets the current score board
 	vector<string> getScoreBoard() const;
 
+	vector<pair<string, discrete_distribution<>>> getPlayer() const;
+
+	void setPlayer(vector<pair<string, discrete_distribution<int>>> players);
+
 	// This is main function to display the final score board (summary)
 	// of the match. To be called by the main.cpp driver program
 	void displayFinalScoreBoard(const vector<string>& finalScoreBoard) const;
@@ -49,7 +57,7 @@ public:
 	// This is the main function to start simulation of the match based
 	// on the given parameters. 
 	// Returns the result of the match simulation.
-	vector<string> simulateMatch(const vector<Player>& players);
+	vector<string> simulateMatch();
 };
 
 #endif
