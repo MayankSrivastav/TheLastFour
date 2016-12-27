@@ -2,6 +2,7 @@
 // It returns the final summary of the match
 
 #include "TheLastFour.h"
+#include "ScoreCalculation.h"
 #include <random>
 #include <iostream>
 using namespace std;
@@ -19,6 +20,46 @@ void TheLastFour::setRunsToScore(int runsToScore)
 int TheLastFour::getRunsToScore() const
 {
 	return runsToScore;
+}
+
+void TheLastFour::setAtStrike(const int atStrike)
+{
+	this->atStrike = atStrike;
+}
+
+int TheLastFour::getAtStrike() const
+{
+	return atStrike;
+}
+
+void TheLastFour::setPlayer1(int player1)
+{
+	this->player1 = player1;
+}
+
+int TheLastFour::getPlayer1() const
+{
+	return player1;
+}
+
+void TheLastFour::setPlayer2(const int player2)
+{
+	this->player2 = player2;
+}
+
+int TheLastFour::getPlayer2() const
+{
+	return player2;
+}
+
+void TheLastFour::setNextPlayer(const int nextPlayer)
+{
+	this->nextPlayer = nextPlayer;
+}
+
+int TheLastFour::getNextPlayer() const
+{
+	return nextPlayer;
 }
 
 // This function sets the number of wickets left
@@ -67,11 +108,21 @@ void TheLastFour::setPlayer(vector<pair<string, discrete_distribution<int>>> pla
 	this->player = players;
 }
 
+void TheLastFour::setWonOrLost(const string wonOrLost)
+{
+	this->wonOrLost = wonOrLost;
+}
+
+string TheLastFour::getWonOrLost() const
+{
+	return wonOrLost;
+}
+
 // This is main function to display the final score board (summary)
 // of the match.
-void TheLastFour::displayFinalScoreBoard(const vector<string>& finalScoreBoard) const
+void TheLastFour::displayFinalScoreBoard() const
 {	
-	for (auto score : finalScoreBoard) {
+	for (auto score : scoreBoard) {
 		cout << score << endl;
 	}
 	cout << endl;
@@ -82,100 +133,23 @@ void TheLastFour::displayFinalScoreBoard(const vector<string>& finalScoreBoard) 
 //
 // Returns the result of the match simulation. The match summary is
 // stored in vector of strings.
-vector<string> TheLastFour::simulateMatch()
+void TheLastFour::simulateMatch(ScoreCalculation& sim)
 {
 	// Generate uniformly distributed random number
 	random_device rd;
 	mt19937 gen(rd());
-	
+
 	// Initialize local variables 
-	enum runType { Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Five = 5, Six = 6, Out = 7 };
-	int runsToScoreNow = runsToScore;
 	int ballNo, noOfBallsRemaining = oversRemaining * 6;
-	int currentOver = 0, runScoredPerBall = 0;
-	string runsScored;
-	int ballNoThisOver = 0;
-	bool win = false;
-	int player1 = 0, player2 = 1;	// Current player in the middle
-	int atStrike = player1, nextPlayer = player2 + 1;	// player1 is at strike. next Player will be 1 down (which is aliased as player2 + 1 and so on)
+	int runScoredPerBall = 0;
 
 	// Simulation starts with ball no. 1 and goes upto number of balls remaining
 	for (ballNo = 1; ballNo <= noOfBallsRemaining; ++ballNo) {
 		runScoredPerBall = player[atStrike].second(gen);// Generate the run scored this ball for the current player at strike
-		ballNoThisOver++;
+		
+		sim.calculateScore(ballNo, runScoredPerBall);
 
-		if (runScoredPerBall == Zero || runScoredPerBall == Two || runScoredPerBall == Four || runScoredPerBall == Six) {	// No strike change for 0, 2, 4 and 6 runs
-			// runs scored summary for the current ball
-			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + player[atStrike].first + " scores " + to_string(runScoredPerBall) + " run(s)";
-			// update the score board
-			scoreBoard.emplace_back(runsScored);
-		}
-		else if (runScoredPerBall == One || runScoredPerBall == Three || runScoredPerBall == Five) { // Players change strike for 1, 3 and 5 runs
-			// runs scored summary for the current ball
-			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + player[atStrike].first + " scores " + to_string(runScoredPerBall) + " run(s)";
-			// update the score board
-			scoreBoard.emplace_back(runsScored);
-			// change the strike of players
-			atStrike = (atStrike == player2 ? player1 : player2);
-		}
-		else if (runScoredPerBall == Out) {	// Player gets out, 7 means out
-			// runs scored summary for the current ball
-			runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + player[atStrike].first + " gets out";
-			// update the score board
-			scoreBoard.emplace_back(runsScored);
-
-			// Bring the next player at the same position
-			auto currPlayer = atStrike;						
-			atStrike = nextPlayer;
-			currPlayer == player1 ? (player1 = atStrike) : (player2 = atStrike);
-			nextPlayer++;
-
-			// Update the number of wickets left
-			wicketsLeft--;
-		}
-
-		// Score Calculation
-		// Update the number of runs to score now, if runsScoredPerBall is 7, that means out
-		runsToScoreNow = (runScoredPerBall != Out ? runsToScoreNow - runScoredPerBall : runsToScoreNow);
-
-		// If the number of runs to score now is less than or equal to 0, 
-		// then Lengaburu has won the match. Break out of the for loop
-		//
-		// Else if runsToScoreNow is more than 0, but no wickets are left
-		// then Lengaburu has lost the match. Break of the loop
-		if (runsToScoreNow <= Zero) {
-			win = true;
-			break;
-		}
-		else if (runsToScoreNow > Zero && wicketsLeft == 0) {
-			win = false;
-			break;
-		}
-
-		// Increase Over counter every 6 balls
-		// Update the status after the over
-		if (ballNo % 6 == 0) {
-			ballNoThisOver = 0;
-			currentOver++;	
-			oversRemaining--;
-
-			atStrike = (atStrike == player2 ? player1 : player2);	// Change strike after the over
-			if (oversRemaining > 0) {
-				scoreBoard.emplace_back(" ");
-				scoreBoard.emplace_back(to_string(oversRemaining) + " overs left." + " " + to_string(runsToScoreNow) + " runs to win");
-			}
-		}
+		if (wonOrLost != "yet to be decided") { break; }
 	}
-
-	// Display initial match summary
-	if (win) {
-		cout << "Lengaburu won by " + to_string(wicketsLeft) + " wickets and " + to_string(24 - ballNo) + " balls remaining" << endl << endl;
-	}
-	else {
-		cout << "Lengaburu lost by " + to_string(runsToScoreNow) + " runs" << endl << endl;
-	}
-
-	// Return the final match summary
-	return scoreBoard;
 }
 
