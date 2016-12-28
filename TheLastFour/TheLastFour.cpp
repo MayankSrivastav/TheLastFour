@@ -87,13 +87,13 @@ int TheLastFour::getOverRemaining() const
 }
 
 // This function sets the current score board
-void TheLastFour::setScoreBoard(vector<string> scoreBoard)
+void TheLastFour::setScoreBoard(string scoreBoard)
 {
 	this->scoreBoard = scoreBoard;
 }
 
 // This function gets the current score board
-vector<string> TheLastFour::getScoreBoard() const
+string TheLastFour::getScoreBoard() const
 {
 	return scoreBoard;
 }
@@ -122,9 +122,10 @@ string TheLastFour::getWonOrLost() const
 // of the match.
 void TheLastFour::displayFinalScoreBoard() const
 {	
-	for (auto score : scoreBoard) {
+	cout << scoreBoard;
+	/*for (auto score : scoreBoard) {
 		cout << score << endl;
-	}
+	}*/
 	cout << endl;
 }
 

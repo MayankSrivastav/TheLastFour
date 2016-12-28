@@ -37,8 +37,8 @@ int main()
 		sim.setWonOrLost("yet to be decided");
 		sim.setPlayer(players);
 		
-		vector<string> finalScoreBoard = { to_string(oversRemaining) + " overs left. " +
-										 to_string(numberOfRunsToScore) + " runs to win" };
+		string finalScoreBoard = to_string(oversRemaining) + " overs left. " +
+										 to_string(numberOfRunsToScore) + " runs to win\n";
 		sim.setScoreBoard(finalScoreBoard);
 
 

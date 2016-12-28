@@ -23,7 +23,7 @@ protected:
 	int wicketsLeft;
 	int oversRemaining;	
 	string wonOrLost;
-	vector<string> scoreBoard;
+	string scoreBoard;
 
 public:	
 	TheLastFour();
@@ -65,10 +65,10 @@ public:
 	int getOverRemaining() const;
 
 	// This function sets the current score board
-	void setScoreBoard(vector<string> scoreBoard);
+	void setScoreBoard(string scoreBoard);
 
 	// This function gets the current score board
-	vector<string> getScoreBoard() const;
+	string getScoreBoard() const;
 
 	vector<pair<string, discrete_distribution<>>> getPlayer() const;
 

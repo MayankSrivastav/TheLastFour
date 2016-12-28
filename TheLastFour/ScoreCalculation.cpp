@@ -51,29 +51,24 @@ int ScoreCalculation::getCurrentOver() const
 }
 
 void ScoreCalculation::calculateScore(int ballNo, int runsScoredPerBall)
-{
-	string runsScored;
+{	
 	ballNoThisOver++;
 
 	if (runsScoredPerBall == Zero || runsScoredPerBall == Two || runsScoredPerBall == Four || runsScoredPerBall == Six) {	// No strike change for 0, 2, 4 and 6 runs
 																														// runs scored summary for the current ball
-		runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + getPlayer()[atStrike].first + " scores " + to_string(runsScoredPerBall) + " run(s)";
-		// update the score board
-		scoreBoard.emplace_back(runsScored);
+		scoreBoard += to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' +
+			getPlayer()[atStrike].first + " scores " + to_string(runsScoredPerBall) + " run(s)\n";	
 	}
 	else if (runsScoredPerBall == One || runsScoredPerBall == Three || runsScoredPerBall == Five) { // Players change strike for 1, 3 and 5 runs
 																								 // runs scored summary for the current ball
-		runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + getPlayer()[atStrike].first + " scores " + to_string(runsScoredPerBall) + " run(s)";
-		// update the score board
-		scoreBoard.emplace_back(runsScored);
-		// change the strike of players
+		scoreBoard += to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' +
+			getPlayer()[atStrike].first + " scores " + to_string(runsScoredPerBall) + " run(s)\n";
+
 		atStrike = (atStrike == player2 ? player1 : player2);
 	}
 	else if (runsScoredPerBall == Out) {	// Player gets out, 7 means out
 										// runs scored summary for the current ball
-		runsScored = to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + getPlayer()[atStrike].first + " gets out";
-		// update the score board
-		scoreBoard.emplace_back(runsScored);
+		scoreBoard += to_string(currentOver) + '.' + to_string(ballNoThisOver) + ' ' + getPlayer()[atStrike].first + " gets out\n";		
 
 		// Bring the next player at the same position
 		auto currPlayer = atStrike;
@@ -83,7 +78,7 @@ void ScoreCalculation::calculateScore(int ballNo, int runsScoredPerBall)
 
 		// Update the number of wickets left
 		wicketsLeft--;
-	}
+	}	
 
 	// Score Calculation
 	// Update the number of runs to score now, if runsScoredPerBall is 7, that means out
@@ -96,12 +91,15 @@ void ScoreCalculation::calculateScore(int ballNo, int runsScoredPerBall)
 	// then Lengaburu has lost the match. Break of the loop
 	if (runsToScoreNow <= Zero) {
 		wonOrLost = "WON";	
-		cout << "Lengaburu won by " + to_string(wicketsLeft) + " wickets and " + to_string(24 - ballNo) + " balls remaining" << endl << endl;
+		scoreBoard = "Lengaburu won by " + to_string(wicketsLeft) + " wickets and " + 
+			to_string(24 - ballNo) + " balls remaining\n\n" + scoreBoard;
+
 		return;
 	}
 	else if (runsToScoreNow > Zero && wicketsLeft == 0) {
 		wonOrLost = "LOST";
-		cout << "Lengaburu lost by " + to_string(runsToScoreNow) + " runs" << endl << endl;
+		scoreBoard = "Lengaburu lost by " + to_string(runsToScoreNow) + " runs\n\n" + scoreBoard;
+		
 		return;
 	}
 
@@ -114,8 +112,7 @@ void ScoreCalculation::calculateScore(int ballNo, int runsScoredPerBall)
 
 		atStrike = (atStrike == player2 ? player1 : player2);	// Change strike after the over
 		if (oversRemaining > 0) {
-			scoreBoard.emplace_back(" ");
-			scoreBoard.emplace_back(to_string(oversRemaining) + " overs left." + " " + to_string(runsToScoreNow) + " runs to win");
+			scoreBoard += "\n" + to_string(oversRemaining) + " overs left." + " " + to_string(runsToScoreNow) + " runs to win\n";			
 		}
 	}
 }
