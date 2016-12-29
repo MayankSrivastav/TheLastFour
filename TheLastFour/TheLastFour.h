@@ -9,78 +9,89 @@
 #include <random>
 #include <string>
 using namespace std;
-class ScoreCalculation;
+
+class ScoreCalculation;	
 class TheLastFour
 {
 private:
-	int runsToScore;
-	vector<pair<string, discrete_distribution<int>>> player;
+	int runsToScore;	// Number of runs to score 
+	vector<pair<string, discrete_distribution<int>>> player;	// player variable, stores the player object
 
 protected:	
-	int atStrike;
-	int nextPlayer;
-	int player1, player2;
-	int wicketsLeft;
-	int oversRemaining;	
-	string wonOrLost;
-	string scoreBoard;
+	int atStrike;			// Current player at the strikers end
+	int nextPlayer;			// Player to come next after a player is out
+	int player1, player2;	// Current two players in the middle
+	int wicketsLeft;		// Number of wickets left now
+	int oversRemaining;		// Overs remaining now
+	string wonOrLost;		// Lengaburu won or lost the match
+	string scoreBoard;		// Current score board of the match
 
 public:	
 	TheLastFour();
 
 	// This funtion sets the number of runs to score
-	void setRunsToScore(int runsToScore);
+	void setRunsToScore(const int& runsToScore);
 
 	// This function returns the number of runs to score
 	int getRunsToScore() const;
 
 	// This function sets the current player at strike
-	void setAtStrike(const int atStrike);
+	void setAtStrike(const int& atStrike);
 
 	// This function gets the current player at strike
 	int getAtStrike() const;
 
-	void setPlayer1(const int player1);
+	// This function sets the one of two players
+	void setPlayer1(const int& player1);
 
+	// This function gets the one of two players
 	int getPlayer1() const;
 
-	void setPlayer2(const int player2);
+	// This function sets the one of two players
+	void setPlayer2(const int& player2);
 
+	// This function gets the one of two players
 	int getPlayer2() const;
 
-	void setNextPlayer(const int nextPlayer);
+	// This function specifies which player will
+	// play next after some player gets out
+	void setNextPlayer(const int& nextPlayer);
 
+	// This function gets the next player
 	int getNextPlayer() const;
 
 	// This function sets the number of wickets left
-	void setWicketsLeft(int wicketsLeft);
+	void setWicketsLeft(const int& wicketsLeft);
 
 	// This function returns the number of wickets left
 	int getWicketsLeft() const;
 
 	// This function sets the number of overs remaining
-	void setOversRemaining(int oversRemaining);
+	void setOversRemaining(const int& oversRemaining);
 
 	// This function gets the number of overs remaining
 	int getOverRemaining() const;
 
 	// This function sets the current score board
-	void setScoreBoard(string scoreBoard);
+	void setScoreBoard(const string& scoreBoard);
 
 	// This function gets the current score board
 	string getScoreBoard() const;
 
+	// This function sets the player object. This
+	// defines the players and their probabilities
+	void setPlayer(const vector<pair<string, discrete_distribution<int>>>& players);
+
+	// This function gets the player object
 	vector<pair<string, discrete_distribution<>>> getPlayer() const;
 
-	void setPlayer(vector<pair<string, discrete_distribution<int>>> players);
+	// This function finally sets the status of 
+	// the match. i.e. if Lengaburu won or lost
+	void setWonOrLost(const string& wonOrLost);
 
-	void setWonOrLost(const string wonOrLost);
-
+	// This function gets the status of the 
+	// match, i.e. if Lengaburu won or lost
 	string getWonOrLost() const;
-
-	// This is main function to display the final score board (summary)
-	// of the match. To be called by the main.cpp driver program
-	void displayFinalScoreBoard() const;
 
 	// This is the main function to start simulation of the match based
 	// on the given parameters. 

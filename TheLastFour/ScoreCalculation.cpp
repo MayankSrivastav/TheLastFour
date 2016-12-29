@@ -20,37 +20,51 @@ ScoreCalculation::ScoreCalculation()
 ScoreCalculation::~ScoreCalculation()
 { }
 
-void ScoreCalculation::setRunsToScoreNow(const int runsToScoreNow)
+// This function sets the number of runs to 
+// score now
+void ScoreCalculation::setRunsToScoreNow(const int& runsToScoreNow)
 {
 	this->runsToScoreNow = runsToScoreNow;
 }
 
+// This function gets the number of runs to 
+// score now
 int ScoreCalculation::getRunsToScoreNow() const
 {
 	return runsToScoreNow;
 }
 
-void ScoreCalculation::setBallNoThisOver(const int ballNoThisOVer)
+// This function sets the current ball 
+// in the over
+void ScoreCalculation::setBallNoThisOver(const int& ballNoThisOVer)
 {
 	this->ballNoThisOver = ballNoThisOVer;
 }
 
+// This function gets the current ball 
+// in the over
 int ScoreCalculation::getBallNoThisOver() const
 {
 	return ballNoThisOver;
 }
 
-void ScoreCalculation::setCurrentOver(const int currentOver)
+// This function sets the current over in
+// the match
+void ScoreCalculation::setCurrentOver(const int& currentOver)
 {
 	this->currentOver = currentOver;
 }
 
+// This function gets the current over in
+// the match
 int ScoreCalculation::getCurrentOver() const
 {
 	return currentOver;
 }
 
-void ScoreCalculation::calculateScore(int ballNo, int runsScoredPerBall)
+// This function calculates the score on every delivery
+// and updates the objects/members accordingly
+void ScoreCalculation::calculateScore(const int& ballNo, const int& runsScoredPerBall)
 {	
 	ballNoThisOver++;
 
