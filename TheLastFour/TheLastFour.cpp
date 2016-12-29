@@ -118,17 +118,6 @@ string TheLastFour::getWonOrLost() const
 	return wonOrLost;
 }
 
-// This is main function to display the final score board (summary)
-// of the match.
-void TheLastFour::displayFinalScoreBoard() const
-{	
-	cout << scoreBoard;
-	/*for (auto score : scoreBoard) {
-		cout << score << endl;
-	}*/
-	cout << endl;
-}
-
 // This is the main function to start simulation of the match based
 // on the given parameters. 
 //

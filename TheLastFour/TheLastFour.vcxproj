@@ -146,11 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DisplayScoreBoard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ScoreCalculation.cpp" />
     <ClCompile Include="TheLastFour.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DisplayScoreBoard.h" />
     <ClInclude Include="ScoreCalculation.h" />
     <ClInclude Include="TheLastFour.h" />
   </ItemGroup>

@@ -1,8 +1,8 @@
 // This is the driver program of TheLastFour
 
 #include <iostream>
-//#include "Player.h"
 #include "ScoreCalculation.h"
+#include "DisplayScoreBoard.h"
 using namespace std;
 
 int main()
@@ -44,10 +44,12 @@ int main()
 
 		// Get the finalScoreBoard (i.e. the result of the match)
 		// by calling the simulateMatch() function
-		sim.simulateMatch(sim);
-	
-		// Display the finalScoreBoard (i.e. the result of the match)
-		sim.displayFinalScoreBoard();
+		sim.simulateMatch(sim);			
+
+		// Call the function which will display
+		// the score board
+		DisplayScoreBoard dsp;
+		dsp.displayScoreBoard(sim.getScoreBoard());
 	//}
 	return 0;
 }
