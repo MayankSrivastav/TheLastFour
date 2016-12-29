@@ -5,16 +5,21 @@ const enum runType { Zero = 0, One = 1, Two = 2, Three = 3, Four = 4, Five = 5, 
 ScoreCalculation::ScoreCalculation()
 { }
 
-//ScoreCalculation::ScoreCalculation(int player1, int player2, int nextPlayer,
-//	int runsToScoreNow, int ballNoThisOver, int currentOver) 
-//{		
-//	this->player1 = player1;
-//	this->player2 = player2;
-//	this->nextPlayer = nextPlayer;
-//	this->runsToScoreNow = runsToScoreNow;	
-//	this->ballNoThisOver = ballNoThisOver;
-//	this->currentOver = currentOver;	
-//}
+// Constructor to initialize TheLastFour class members
+// and as well as ScoreCalculation members
+ScoreCalculation::ScoreCalculation(
+					int runsToScore, vector<pair<string, discrete_distribution<int>>> player,
+					int player1, int player2, int nextPlayer, int atStrike, int wicketsLeft, int oversRemaining,
+					string wonOrLost, string scoreBoard, int runsToScoreNow, int ballNoThisOver, int currentOver)
+					: TheLastFour(runsToScore, player,
+					player1, player2, nextPlayer, atStrike, wicketsLeft, oversRemaining,
+					wonOrLost, scoreBoard
+					)
+{	
+	this->runsToScoreNow = runsToScoreNow;	
+	this->ballNoThisOver = ballNoThisOver;
+	this->currentOver = currentOver;	
+}
 
 
 ScoreCalculation::~ScoreCalculation()

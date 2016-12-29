@@ -11,6 +11,11 @@ int main()
 	int numberOfRunsToScore = 40;
 	int wicketsLeft = 3;
 	int oversRemaining = 4;
+	int player1 = 0, player2 = 1;
+	int nextPlayer = player2 + 1;
+	int atStrike = player1;
+	int ballNoThisOver = 0;
+	string wonOrLost = "yet to be decided";
 
 	vector<pair<string, discrete_distribution<int>>> players;
 	pair<string, discrete_distribution<int>> p1 = { "Kirat Boli", { 5, 30, 25, 10, 15, 1, 9, 5 } };
@@ -22,25 +27,24 @@ int main()
 	players.emplace_back(p3);
 	players.emplace_back(p4);
 
-	//for (int i = 0; i < 50; ++i) {	// Test loop, to be removed //
-		// Set all the members as required. 	
+	string finalScoreBoard = to_string(oversRemaining) + " overs left. " +
+		to_string(numberOfRunsToScore) + " runs to win\n";
 
+	for (int i = 0; i < 10; ++i) {	// Test loop, to be removed //
+		// Set all the members as required. 			
 		ScoreCalculation sim;
 		sim.setRunsToScore(numberOfRunsToScore);	// Number of runs to score
 		sim.setRunsToScoreNow(sim.getRunsToScore());
 		sim.setWicketsLeft(wicketsLeft);			// Number of wickets left
 		sim.setOversRemaining(oversRemaining);		// Number of overs remaining		
-		sim.setPlayer1(0);
-		sim.setPlayer2(1);
+		sim.setPlayer1(player1);
+		sim.setPlayer2(player2);
 		sim.setNextPlayer(sim.getPlayer2() + 1);
 		sim.setAtStrike(sim.getPlayer1());
-		sim.setWonOrLost("yet to be decided");
+		sim.setWonOrLost(wonOrLost);
 		sim.setPlayer(players);
-		
-		string finalScoreBoard = to_string(oversRemaining) + " overs left. " +
-										 to_string(numberOfRunsToScore) + " runs to win\n";
+		sim.setBallNoThisOver(ballNoThisOver);		
 		sim.setScoreBoard(finalScoreBoard);
-
 
 		// Get the finalScoreBoard (i.e. the result of the match)
 		// by calling the simulateMatch() function
@@ -50,6 +54,7 @@ int main()
 		// the score board
 		DisplayScoreBoard dsp;
 		dsp.displayScoreBoard(sim.getScoreBoard());
-	//}
+	}
+
 	return 0;
 }

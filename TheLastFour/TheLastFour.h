@@ -29,6 +29,10 @@ protected:
 public:	
 	TheLastFour();
 
+	TheLastFour(int runsToScore, vector<pair<string, discrete_distribution<int>>> player,
+		int player1, int player2, int nextPlayer, int atStrike, int wicketsLeft, int oversRemaining,
+		string wonOrLost, string scoreBoard);
+
 	// This funtion sets the number of runs to score
 	void setRunsToScore(const int& runsToScore);
 

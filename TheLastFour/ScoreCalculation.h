@@ -17,8 +17,13 @@ private:
 
 public:	
 	ScoreCalculation();
-	//ScoreCalculation(int player1, int player2, int nextPlayer,
-	//	int runsToScoreNow, int ballNoThisOver, int currentOver);
+
+	// Constructor to initialize TheLastFour class members
+	// and as well as ScoreCalculation members
+	ScoreCalculation(int runsToScore, vector<pair<string, discrete_distribution<int>>> player,
+		int player1, int player2, int nextPlayer, int atStrike, int wicketsLeft, int oversRemaining,
+		string wonOrLost, string scoreBoard, int runsToScoreNow, int ballNoThisOver, int currentOver);
+		
 	~ScoreCalculation();	
 
 	// This function sets the number of runs to 

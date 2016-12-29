@@ -10,6 +10,22 @@ using namespace std;
 TheLastFour::TheLastFour()
 { }
 
+TheLastFour::TheLastFour(int runsToScore, vector<pair<string, discrete_distribution<int>>> player,
+	int player1, int player2, int nextPlayer, int atStrike, int wicketsLeft, int oversRemaining,
+	string wonOrLost, string scoreBoard)
+{
+	this->runsToScore = runsToScore;
+	this->player = player;
+	this->atStrike = atStrike;
+	this->nextPlayer = nextPlayer;
+	this->player1 = player1;
+	this->player2 = player2;
+	this->wicketsLeft = wicketsLeft;
+	this->oversRemaining = oversRemaining;
+	this->wonOrLost = wonOrLost;
+	this->scoreBoard = scoreBoard;
+}
+
 // This funtion sets the number of runs to score
 void TheLastFour::setRunsToScore(const int& runsToScore)
 {
